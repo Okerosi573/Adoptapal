@@ -47,10 +47,9 @@ fun Register_Screen(
     var lname by remember { mutableStateOf(TextFieldValue("")) }
     var confirm by remember { mutableStateOf(TextFieldValue("")) }
     var passwordVisible by remember { mutableStateOf(false) }
-
+    var confirmPasswordVisible by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    val registerState = viewModel.registerState.collectAsState()
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -92,7 +91,7 @@ fun Register_Screen(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email", color = Color.White) },
-            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon")},
+            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
             textStyle = TextStyle(color = Color.White),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
@@ -103,7 +102,7 @@ fun Register_Screen(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password", color = Color.White) },
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon")},
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             textStyle = TextStyle(color = Color.White),
             modifier = Modifier.fillMaxWidth(),
@@ -121,24 +120,31 @@ fun Register_Screen(
             value = confirm,
             onValueChange = { confirm = it },
             label = { Text("Confirm Password", color = Color.White) },
-            trailingIcon = {
-                val image = if (passwordVisible) painterResource(R.drawable.visibilityoff) else painterResource(R.drawable.visibility)
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(image, contentDescription = if (passwordVisible) "Hide Password" else "Show Password")
-                }
-            },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             textStyle = TextStyle(color = Color.White),
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            trailingIcon = {
+                val image = if (confirmPasswordVisible) painterResource(R.drawable.visibilityoff) else painterResource(R.drawable.visibility)
+                IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
+                    Icon(image, contentDescription = if (confirmPasswordVisible) "Hide Password" else "Show Password")
+                }
+            }
         )
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = {
-                if (password.text != confirm.text) {
+                if (password.text.trim() != confirm.text.trim()) {
                     Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                } else if (email.text.trim().isEmpty() || password.text.trim().isEmpty() || fname.text.trim().isEmpty() || lname.text.trim().isEmpty()) {
+                    Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
                 } else {
+                    // Navigate immediately
+                    navController.navigate(ROUTE_HOME) {
+                        popUpTo(ROUTE_REGISTER) { inclusive = true }
+                    }
+                    // Register in background
                     viewModel.register(
                         email = email.text.trim(),
                         password = password.text.trim(),
@@ -153,11 +159,7 @@ fun Register_Screen(
                 .width(250.dp)
                 .height(50.dp)
         ) {
-            if (registerState.value.isLoading) {
-                CircularProgressIndicator(color = bluu, strokeWidth = 2.dp)
-            } else {
-                Text("Click to sign up", color = bluu, fontSize = 18.sp)
-            }
+            Text("Click to sign up", color = bluu, fontSize = 18.sp)
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -171,23 +173,4 @@ fun Register_Screen(
             }
         )
     }
-
-    // Handle side effects like showing Toast or navigation
-    LaunchedEffect(registerState.value) {
-        registerState.value.errorMessage?.let { error ->
-            Toast.makeText(context, error, Toast.LENGTH_LONG).show()
-            viewModel.clearRegisterState()
-        }
-        if (registerState.value.isSuccess) {
-            Toast.makeText(context, "Registered successfully", Toast.LENGTH_SHORT).show()
-            navController.navigate(ROUTE_HOME) {
-                popUpTo(ROUTE_REGISTER) { inclusive = true }
-            }
-            viewModel.clearRegisterState()
-        }
-    }
 }
-
-
-
-

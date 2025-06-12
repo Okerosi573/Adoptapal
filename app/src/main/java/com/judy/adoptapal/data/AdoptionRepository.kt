@@ -1,24 +1,17 @@
 package com.judy.adoptapal.data
 
-
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.judy.adoptapal.models.AdoptionForm
+import kotlinx.coroutines.tasks.await
 
+class AdoptionRepository {
+    private val db = FirebaseFirestore.getInstance()
 
-fun submitAdoptionForm(
-    form: AdoptionForm,
-    onSuccess: () -> Unit,
-    onError: (Exception) -> Unit
-) {
-    val db = Firebase.firestore
-    db.collection("adoptionForms")
-        .add(form)
-        .addOnSuccessListener { onSuccess() }
-        .addOnFailureListener { e -> onError(e) }
+    suspend fun submitForm(form: AdoptionForm) {
+        db.collection("adoptionForms")
+            .add(form)
+            .await() // suspends until complete
+    }
 }
-
-
-
 
 

@@ -103,7 +103,7 @@ fun SuccessScreen(navController: NavHostController) {
                     }
 
                     Button(onClick = {
-                        navController.navigate(ROUTE_PETCATEGORYSECTION) // Replace with your actual pet list route
+                        navController.navigate("PetSection/Dogs") // Replace with your actual pet list route
                     }) {
                         Text("View More Pets")
                     }
