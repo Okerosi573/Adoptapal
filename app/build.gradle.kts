@@ -53,16 +53,21 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(libs.androidx.navigation.compose)
     implementation ("androidx.compose.foundation:foundation:1.8.2")
-    implementation ("androidx.compose.material:material:1.8.2")
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
+
+
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     implementation ("com.google.firebase:firebase-auth-ktx")
 
-    // Firebase Firestore
-    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+
+
 // Firebase BOM (optional but recommended)
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
 
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)

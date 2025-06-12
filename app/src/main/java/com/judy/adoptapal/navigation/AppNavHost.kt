@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.judy.adoptapal.ui.theme.screens.adoptable.PetCategoryTabs
 import com.judy.adoptapal.ui.theme.screens.adoptionform.AdoptionForm_Screen
+import com.judy.adoptapal.ui.theme.screens.adoptionform.SuccessScreen
 import com.judy.adoptapal.ui.theme.screens.home.Home_Screen
 import com.judy.adoptapal.ui.theme.screens.login.Login_Screen
 import com.judy.adoptapal.ui.theme.screens.petlistings.Catlist_Screen
@@ -34,13 +35,23 @@ fun AppNavHost(navController: NavHostController= rememberNavController(),
         composable(ROUTE_CATLIST) { Catlist_Screen(navController) }
         composable(ROUTE_DOGLIST) { Doglist_Screen(navController) }
         composable(ROUTE_RABBITLIST) { Rabbitlist_Screen(navController) }
+        composable(ROUTE_SUCCESS){ SuccessScreen(navController) }
 
         composable("PetSection/{type}") { backStackEntry ->
             val petType = backStackEntry.arguments?.getString("type") ?: "Dog"
-            PetCategoryTabs(navController = navController, selectedCategory = petType)
-
+            PetCategoryTabs(
+                selectedCategory = "Dog", // or petType if dynamic
+                onInterestedClick = { petId ->
+                    navController.navigate("adoption_form/$petId")
+                }
+            )
 
         }
+        composable("adoption_form/{petId}") { backStackEntry ->
+            val petId = backStackEntry.arguments?.getString("petId")
+            AdoptionForm_Screen(navController = navController, petId = petId)
+        }
+
 
 
     }

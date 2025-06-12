@@ -5,18 +5,25 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.judy.adoptapal.R
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -39,6 +46,8 @@ fun Register_Screen(
     var fname by remember { mutableStateOf(TextFieldValue("")) }
     var lname by remember { mutableStateOf(TextFieldValue("")) }
     var confirm by remember { mutableStateOf(TextFieldValue("")) }
+    var passwordVisible by remember { mutableStateOf(false) }
+
 
     val context = LocalContext.current
     val registerState = viewModel.registerState.collectAsState()
@@ -83,6 +92,7 @@ fun Register_Screen(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email", color = Color.White) },
+            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon")},
             textStyle = TextStyle(color = Color.White),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
@@ -93,9 +103,17 @@ fun Register_Screen(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password", color = Color.White) },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon")},
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             textStyle = TextStyle(color = Color.White),
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            trailingIcon = {
+                val image = if (passwordVisible) painterResource(R.drawable.visibilityoff) else painterResource(R.drawable.visibility)
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(image, contentDescription = if (passwordVisible) "Hide Password" else "Show Password")
+                }
+            }
         )
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -103,6 +121,13 @@ fun Register_Screen(
             value = confirm,
             onValueChange = { confirm = it },
             label = { Text("Confirm Password", color = Color.White) },
+            trailingIcon = {
+                val image = if (passwordVisible) painterResource(R.drawable.visibilityoff) else painterResource(R.drawable.visibility)
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(image, contentDescription = if (passwordVisible) "Hide Password" else "Show Password")
+                }
+            },
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             textStyle = TextStyle(color = Color.White),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)

@@ -346,3 +346,17 @@ val cocoaCream = Color(0xFFD9C3A9)
 val bluu = Color(0xFF1B2236)
 val PastelLemonYellow = Color(0xFFFAF884)
 
+
+
+val SoftPurple = Color(0xFFD1C4E9)      // Pet category card
+val PrimaryBlue = Color(0xFF2196F3)     // Top bar & buttons
+val ButtonBackground = Color(0xFFBBDEFB)
+val TextBlue = Color(0xFF0D47A1)        // Headings/text
+val LightCream = Color(0xFFFFF8E1)
+val oceanBlue = Color(0xFF2962FF)         // Deep vibrant blue
+val softBlue = Color(0xFFE3F2FD)          // Light background blue
+             // Gentle pink accent
+val whiteSmoke = Color(0xFFF5F5F5)        // Clean background
+val darkText = Color(0xFF263238)          // For strong text
+// Top card and bottom section
+

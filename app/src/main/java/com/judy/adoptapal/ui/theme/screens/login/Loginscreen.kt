@@ -8,6 +8,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +22,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,9 +44,9 @@ fun Login_Screen(
     viewModel: AuthViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
+    var passwordVisible by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     val context = LocalContext.current
-
     val loginState = viewModel.loginState.collectAsState()
 
     Column(
@@ -73,9 +77,12 @@ fun Login_Screen(
             value = email,
             onValueChange = { email = it },
             label = { Text("Enter email", color = Color.White, fontSize = 18.sp) },
+            leadingIcon = {Icon(Icons.Filled.Email, contentDescription = "Email icon")},
             textStyle = LocalTextStyle.current.copy(color = Color.White),
             shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+
+
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -83,11 +90,19 @@ fun Login_Screen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
+            trailingIcon = {
+                val image = if (passwordVisible) painterResource(R.drawable.visibilityoff) else painterResource(R.drawable.visibility)
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(image, contentDescription = if (passwordVisible) "Hide Password" else "Show Password")
+                }
+            },
             label = { Text("Enter password", color = Color.White, fontSize = 18.sp) },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon")},
             textStyle = LocalTextStyle.current.copy(color = Color.White),
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
+
         )
 
         Spacer(modifier = Modifier.height(60.dp))

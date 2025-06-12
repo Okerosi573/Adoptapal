@@ -1,5 +1,6 @@
 package com.judy.adoptapal.ui.theme.screens.petlistings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,12 +18,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.judy.adoptapal.models.DogBreed
 import com.judy.adoptapal.models.dogBreedsInKenya
+import com.judy.adoptapal.ui.theme.ivoryGold
 
 @Composable
 fun Doglist_Screen(navController: NavHostController) {
@@ -40,7 +43,16 @@ fun Doglist_Screen(navController: NavHostController) {
             label = { Text("Search Dog Breeds") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal).asPaddingValues())
+                .padding(16.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black,
+                cursorColor = Color.Black,
+                focusedLabelColor = Color.Black,
+                unfocusedLabelColor = Color.Gray
+            )
+
         )
 
         if (filteredDogs.isEmpty()) {
