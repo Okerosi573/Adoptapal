@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -24,6 +26,7 @@ import com.judy.adoptapal.data.AdoptionFormViewModel
 import com.judy.adoptapal.navigation.ROUTE_SUCCESS
 import com.judy.adoptapal.ui.theme.ivoryGold
 import com.judy.adoptapal.ui.theme.nightSky
+
 
 @Composable
 fun AdoptionForm(viewModel: AdoptionFormViewModel, onSubmit: () -> Unit) {
@@ -35,28 +38,87 @@ fun AdoptionForm(viewModel: AdoptionFormViewModel, onSubmit: () -> Unit) {
             .padding(WindowInsets.systemBars.asPaddingValues()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        OutlinedTextField(value = viewModel.fullName, onValueChange = { viewModel.fullName = it }, label = { Text("Full Name") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(value = viewModel.phoneNumber, onValueChange = { viewModel.phoneNumber = it }, label = { Text("Phone Number") }, keyboardOptions = KeyboardOptions.Default.copy(keyboardType = androidx.compose.ui.text.input.KeyboardType.Phone), modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(value = viewModel.location, onValueChange = { viewModel.location = it }, label = { Text("Address") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(value = viewModel.homeStatus, onValueChange = { viewModel.homeStatus = it }, label = { Text("Rent or Own") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(value = viewModel.reason, onValueChange = { viewModel.reason = it }, label = { Text("Why adopt this pet?") }, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(value = viewModel.petStayLocation, onValueChange = { viewModel.petStayLocation = it }, label = { Text("Where will pet stay?") }, modifier = Modifier.fillMaxWidth())
+        val textStyle = TextStyle(color = Color.White)
+
+        OutlinedTextField(
+            value = viewModel.fullName,
+            onValueChange = { viewModel.fullName = it },
+            label = { Text("Full Name", color = Color.White) },
+            textStyle = textStyle,
+
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = viewModel.phoneNumber,
+            onValueChange = { viewModel.phoneNumber = it },
+            label = { Text("Phone Number", color = Color.White) },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
+            textStyle = textStyle,
+
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = viewModel.location,
+            onValueChange = { viewModel.location = it },
+            label = { Text("Address", color = Color.White) },
+            textStyle = textStyle,
+
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = viewModel.homeStatus,
+            onValueChange = { viewModel.homeStatus = it },
+            label = { Text("Rent or Own", color = Color.White) },
+            textStyle = textStyle,
+
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = viewModel.reason,
+            onValueChange = { viewModel.reason = it },
+            label = { Text("Why adopt this pet?", color = Color.White) },
+            textStyle = textStyle,
+
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = viewModel.petStayLocation,
+            onValueChange = { viewModel.petStayLocation = it },
+            label = { Text("Where will pet stay?", color = Color.White) },
+            textStyle = textStyle,
+
+            modifier = Modifier.fillMaxWidth()
+        )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Owned a pet before?")
+            Text("Owned a pet before?", color = Color.White)
             Spacer(Modifier.width(8.dp))
-            Switch(checked = viewModel.hasOwnedPet, onCheckedChange = { viewModel.hasOwnedPet = it })
+            Switch(
+                checked = viewModel.hasOwnedPet,
+                onCheckedChange = { viewModel.hasOwnedPet = it }
+            )
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Can afford vet & food?")
+            Text("Can afford vet & food?", color = Color.White)
             Spacer(Modifier.width(8.dp))
-            Switch(checked = viewModel.financiallyAble, onCheckedChange = { viewModel.financiallyAble = it })
+            Switch(
+                checked = viewModel.financiallyAble,
+                onCheckedChange = { viewModel.financiallyAble = it }
+            )
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(checked = viewModel.agreeReturn, onCheckedChange = { viewModel.agreeReturn = it })
-            Text("Agree to return pet if needed")
+            Checkbox(
+                checked = viewModel.agreeReturn,
+                onCheckedChange = { viewModel.agreeReturn = it }
+            )
+            Text("Agree to return pet if needed", color = Color.White)
         }
 
         Text(
@@ -74,6 +136,7 @@ fun AdoptionForm(viewModel: AdoptionFormViewModel, onSubmit: () -> Unit) {
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
