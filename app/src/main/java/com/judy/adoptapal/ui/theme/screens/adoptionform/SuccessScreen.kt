@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -57,6 +58,7 @@ fun SuccessScreen(navController: NavHostController) {
     val url = "https://wa.me/$phoneNumber?text=$encodedMessage"
 
     Scaffold(
+        containerColor = Color.Black, // Set scaffold background to black
         topBar = {
             TopAppBar(
                 title = { Text("Submission Successful") },
@@ -70,6 +72,7 @@ fun SuccessScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color.Black) // Ensures background is black even inside Box
                 .padding(paddingValues)
                 .padding(WindowInsets.systemBars.asPaddingValues())
                 .padding(16.dp),
@@ -86,11 +89,17 @@ fun SuccessScreen(navController: NavHostController) {
                     modifier = Modifier.size(80.dp)
                 )
 
-                Text("Thank you!", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                Text(
+                    "Thank you!",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White // Make text visible on black
+                )
                 Text(
                     text = "Your adoption request has been submitted. Our team will contact you within 24–48 hours.",
                     style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = Color.White // Make text visible on black
                 )
 
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -103,7 +112,7 @@ fun SuccessScreen(navController: NavHostController) {
                     }
 
                     Button(onClick = {
-                        navController.navigate("PetSection/Dogs") // Replace with your actual pet list route
+                        navController.navigate("PetSection/Dogs")
                     }) {
                         Text("View More Pets")
                     }
@@ -134,10 +143,4 @@ fun SuccessScreen(navController: NavHostController) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun Successprev() {
-    SuccessScreen(rememberNavController())
 }

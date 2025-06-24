@@ -38,61 +38,71 @@ fun AdoptionForm(viewModel: AdoptionFormViewModel, onSubmit: () -> Unit) {
             .padding(WindowInsets.systemBars.asPaddingValues()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        val textStyle = TextStyle(color = Color.White)
+
+        val textFieldColors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
+            cursorColor = Color.White,
+            focusedLabelColor = Color.White,
+            unfocusedLabelColor = Color.White,
+            focusedBorderColor = Color.White,
+            unfocusedBorderColor = Color.Gray
+        )
+
 
         OutlinedTextField(
             value = viewModel.fullName,
             onValueChange = { viewModel.fullName = it },
-            label = { Text("Full Name", color = Color.White) },
-            textStyle = textStyle,
-
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Full Name") },
+            textStyle = TextStyle(color = Color.White),
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
         )
 
         OutlinedTextField(
             value = viewModel.phoneNumber,
             onValueChange = { viewModel.phoneNumber = it },
-            label = { Text("Phone Number", color = Color.White) },
+            label = { Text("Phone Number") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
-            textStyle = textStyle,
-
-            modifier = Modifier.fillMaxWidth()
+            textStyle = TextStyle(color = Color.White),
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
         )
 
         OutlinedTextField(
             value = viewModel.location,
             onValueChange = { viewModel.location = it },
-            label = { Text("Address", color = Color.White) },
-            textStyle = textStyle,
-
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Address") },
+            textStyle = TextStyle(color = Color.White),
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
         )
 
         OutlinedTextField(
             value = viewModel.homeStatus,
             onValueChange = { viewModel.homeStatus = it },
-            label = { Text("Rent or Own", color = Color.White) },
-            textStyle = textStyle,
-
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Rent or Own") },
+            textStyle = TextStyle(color = Color.White),
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
         )
 
         OutlinedTextField(
             value = viewModel.reason,
             onValueChange = { viewModel.reason = it },
-            label = { Text("Why adopt this pet?", color = Color.White) },
-            textStyle = textStyle,
-
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Why adopt this pet?") },
+            textStyle = TextStyle(color = Color.White),
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
         )
 
         OutlinedTextField(
             value = viewModel.petStayLocation,
             onValueChange = { viewModel.petStayLocation = it },
-            label = { Text("Where will pet stay?", color = Color.White) },
-            textStyle = textStyle,
-
-            modifier = Modifier.fillMaxWidth()
+            label = { Text("Where will pet stay?") },
+            textStyle = TextStyle(color = Color.White),
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
         )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
